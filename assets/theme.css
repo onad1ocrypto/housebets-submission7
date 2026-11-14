@@ -22,7 +22,7 @@
 
 :root{
   /* ---- surfaces: warm paper, never blue-white ---- */
-  --page:      #F4F3EF;
+  --page:      #EAE8E1;
   --bar:       #FFFFFF;
   --card:      #FFFFFF;
   --card-2:    #F2F1EC;
@@ -95,12 +95,12 @@
    that was a cathode tube, and there is no tube here.
    ========================================================================= */
 body{
-  background-color:#F4F3EF;
+  background-color:#EAE8E1;
   background-image:
     linear-gradient(90deg, rgba(16,24,28,.028) 1px, transparent 1px),
     linear-gradient(0deg,  rgba(16,24,28,.028) 1px, transparent 1px),
     radial-gradient(1100px 420px at 50% -16%, rgba(0,107,117,.045), transparent 64%),
-    linear-gradient(180deg, #FBFBF8 0%, #F4F3EF 58%, #EDEBE5 100%);
+    linear-gradient(180deg, #F4F2EC 0%, #EAE8E1 58%, #E2E0D8 100%);
   background-size: 32px 32px, 32px 32px, auto, auto;
   background-attachment: fixed, fixed, fixed, fixed;
   min-height:100vh;
@@ -109,16 +109,54 @@ body{
 /* the app's own painted surfaces sit on the paper, not over it */
 .shell, .app, #app{ background:transparent !important; }
 
+/* ---- the masthead stays dark -------------------------------------
+   The official Housebets lockup is light artwork — measured, its mean
+   luminance is 0.61 and 43% of it is brighter than 0.70. Put it on a
+   white bar and it disappears. So the bar keeps Housebets' own
+   near-black (#041015, their meta theme-color) and the title reads.
+
+   It also gives the paper below a masthead, the way a broadsheet has
+   one: dark rule of chrome, then the sheet.
+------------------------------------------------------------------ */
 .bar, .topbar{
-  background:rgba(255,255,255,.92) !important;
-  border-bottom:1px solid var(--hair-2) !important;
+  background:#041015 !important;
+  border-bottom:1px solid rgba(2,247,253,.22) !important;
   backdrop-filter:blur(8px);
 }
+.topbar, .topbar *{ color:#C4F4F1 !important; }
+.prize{
+  background:linear-gradient(180deg, rgba(2,247,253,.16), rgba(2,247,253,.06)) !important;
+  border:1px solid rgba(2,247,253,.32) !important;
+}
+.prize span{ color:#A9C6CE !important; }
+.prize b{ color:#02F7FD !important; }
+/* Log In is a chip, not bare text: pale cyan with near-black ink, the
+   way Housebets sets its own secondary buttons. The blanket colour
+   above would have put cyan text on a cyan chip. */
+.btn-login{
+  color:#041015 !important;
+  background:var(--aqua-deep) !important;
+  border:1px solid rgba(2,247,253,.35) !important;
+}
+.iconbtn{ color:#C4F4F1 !important; }
+.iconbtn:hover{ color:#FFFFFF !important; background:rgba(255,255,255,.12) !important; }
+
+/* the ticker rides with the masthead: same near-black, so the strip of
+   incidents reads as one band of chrome rather than a row of lost text */
+.ticker{
+  background:#041015 !important;
+  border-bottom:1px solid rgba(2,247,253,.22) !important;
+}
+.tk{ color:#C4F4F1 !important; }
+.tk b{ color:#02F7FD !important; }
+.tk em{ color:#8FA9B2 !important; }
+.tk.red, .tk.red b{ color:#FF7B90 !important; }
+.tk-ball{ background:#5E7880 !important; box-shadow:inset -2px -2px 0 rgba(0,0,0,.45) !important; }
 
 /* on paper a card is separated by a rule and a shadow you barely see,
    never by being lighter than the page — it already is the page */
 .main, .panel{
-  box-shadow:inset 0 0 0 1px rgba(16,24,28,.05), 0 1px 2px rgba(16,24,28,.04) !important;
+  box-shadow:inset 0 0 0 1px rgba(16,24,28,.08), 0 2px 6px rgba(16,24,28,.07) !important;
 }
 
 /* ============================================================================
@@ -262,12 +300,23 @@ button.primary,
    ========================================================================= */
 .hero{
   background:var(--card) !important;
-  border:1px solid var(--hair-2) !important;
+  border:1px solid rgba(16,24,28,.58) !important;
+  min-height:236px !important;
+  /* on paper a card is an object lifted off the sheet: a firm rule around
+     it and a shadow under it, because being lighter than the page is a
+     weak cue at this size — the edge is what actually reads */
+  box-shadow:0 2px 4px rgba(16,24,28,.09), 0 18px 36px -12px rgba(16,24,28,.30) !important;
 }
 .hero::before{
-  background:linear-gradient(180deg, rgba(255,255,255,.58) 0%, rgba(255,255,255,.80) 46%, rgba(255,255,255,.96) 100%) !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.50) 48%, rgba(255,255,255,.93) 100%) !important;
 }
-.hero .heroart{ opacity:.30; }
+.hero .heroart{ opacity:.80; }
+/* the promotion slide gets the brand wash, so it reads as Housebets
+   rather than as another white rectangle */
+.hero.promo{
+  background:var(--aqua-deep) !important;
+  border:1px solid var(--aqua) !important;
+}
 .heroart .ha-crest img{ filter:none !important; }
 .heroart .ha-vs{ color:rgba(16,24,28,.26) !important; text-shadow:none !important; }
 .hkick, .hmeta{ color:var(--ink-2) !important; }
