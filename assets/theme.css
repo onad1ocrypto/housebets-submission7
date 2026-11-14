@@ -22,15 +22,15 @@
 
 :root{
   /* ---- surfaces: warm paper, never blue-white ---- */
-  --page:      #EAE8E1;
-  --bar:       #FFFFFF;
-  --card:      #FFFFFF;
-  --card-2:    #F2F1EC;
-  --tile:      #F2F1EC;
-  --tile-2:    #EBE9E2;
-  --tile-hi:   #E2DFD6;
-  --hair:      rgba(16,24,28,.12);
-  --hair-2:    rgba(16,24,28,.20);
+  --page:      #F1E5C6;   /* the sheet the whole thing is printed on */
+  --bar:       #FFFDF7;
+  --card:      #FFFDF7;
+  --card-2:    #F7F0DD;
+  --tile:      #F7F0DD;
+  --tile-2:    #F1E8D0;
+  --tile-hi:   #E8DBBE;
+  --hair:      rgba(122,82,0,.20);
+  --hair-2:    rgba(122,82,0,.32);
 
   /* ---- ink ---- */
   --ink:       #10181C;
@@ -63,20 +63,31 @@
   --down:      #B23A20;
   --gold:      #7A5200;   /* "something changed" — legible on paper */
 
+  /* ---- blue and gold ----
+     The navy is Housebets' own card colour, #0B1920, so the blue is the
+     brand's and not an invention. Gold is the second voice: it carries
+     the sheet, the trim and the light. Cyan is untouched and still the
+     only colour allowed on a price. */
+  --navy:        #0B1920;
+  --navy-2:      #123243;
+  --gold-bright: #C9A227;
+  --gold-pale:   #FFEEB4;
+  --gold-soft:   rgba(201,162,39,.16);
+
   /* ---- the sports column: a cool panel, one step off the paper ---- */
-  --sport-bg:      #EFF1F1;
-  --sport-edge:    rgba(16,24,28,.12);
+  --sport-bg:      #F7F0DD;
+  --sport-edge:    rgba(122,82,0,.18);
   --sport-ink:     #46545B;
-  --sport-head:    #5F6C73;
-  --sport-hover:   rgba(0,107,117,.07);
-  --sport-n-bg:    rgba(16,24,28,.08);
+  --sport-head:    #0B1920;   /* navy: the blue half of blue-and-gold */
+  --sport-hover:   rgba(122,82,0,.10);
+  --sport-n-bg:    rgba(122,82,0,.12);
   --sport-n-ink:   #46545B;
   --sport-on-bg:   #FFFFFF;
   --sport-on-bar:  #02F7FD;
   --sport-on-ink:  #0B1418;
   --sport-on-n-bg: #02F7FD;
   --sport-on-n-ink:#041015;
-  --sport-thumb:   #D9DCDA;
+  --sport-thumb:   #DFD2B4;
 
   /* square corners — paper and rules, not cards and shadows */
   --r-sm: 2px;
@@ -95,12 +106,12 @@
    that was a cathode tube, and there is no tube here.
    ========================================================================= */
 body{
-  background-color:#EAE8E1;
+  background-color:var(--page);
   background-image:
     linear-gradient(90deg, rgba(16,24,28,.028) 1px, transparent 1px),
     linear-gradient(0deg,  rgba(16,24,28,.028) 1px, transparent 1px),
     radial-gradient(1100px 420px at 50% -16%, rgba(0,107,117,.045), transparent 64%),
-    linear-gradient(180deg, #F4F2EC 0%, #EAE8E1 58%, #E2E0D8 100%);
+    linear-gradient(180deg, #F8F0DA 0%, #F1E5C6 58%, #E9DBB4 100%);
   background-size: 32px 32px, 32px 32px, auto, auto;
   background-attachment: fixed, fixed, fixed, fixed;
   min-height:100vh;
@@ -517,3 +528,67 @@ body::before{
    one colour, an edge you can see without it becoming a frame. */
 .main, .panel, .rail{ border-color:rgba(16,24,28,.30) !important; }
 .panel{ box-shadow:none !important; }
+
+/* ============================================================================
+   GOLD DUST — the light moving on the sheet
+   The paper is gold now, and gold that never catches the light is just
+   beige. So the navy masthead carries a field of specks, each on its
+   own clock so the bar glints rather than blinking in unison, and the
+   sports column gets a slow sheen travelling across it.
+
+   Both are decoration and both are removed under reduced-motion. The
+   specks sit behind the masthead's own content, never over it.
+   ========================================================================= */
+.topbar{ position:relative; }
+.golddust{
+  position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;
+}
+.golddust i{
+  position:absolute; display:block; border-radius:50%;
+  width:var(--sz,3px); height:var(--sz,3px);
+  background:radial-gradient(circle, #FFF6D2 0%, #F0CE68 42%, rgba(201,162,39,0) 70%);
+  opacity:0;
+  animation:goldTwinkle var(--dur,7s) ease-in-out var(--del,0s) infinite;
+}
+.topbar > *:not(.golddust){ position:relative; z-index:1; }
+@keyframes goldTwinkle{
+  0%,100%{ opacity:0;   transform:scale(.5);  }
+  42%    { opacity:.92; transform:scale(1.15); }
+  58%    { opacity:.40; transform:scale(.8);  }
+}
+
+/* the sheen: animating the rail's own background means nothing is laid
+   over the text, so there is no stacking problem to solve */
+.rail{
+  background-image:linear-gradient(105deg, transparent 41%,
+                    rgba(255,238,180,.62) 50%, transparent 59%);
+  background-size:250% 100%;
+  background-repeat:no-repeat;
+  animation:goldSweep 13s ease-in-out infinite;
+}
+@keyframes goldSweep{
+  0%   { background-position:-150% 0; }
+  55%  { background-position:250% 0;  }
+  100% { background-position:250% 0;  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .golddust{ display:none; }
+  .rail{ animation:none; background-image:none; }
+}
+
+/* Two count badges inherited the dark theme's ink: pale cyan at 70% on
+   the pale cyan chip the light theme uses for a selected filter, which
+   is 1.00:1 — one colour sitting on itself. They take the deepened cyan
+   the rest of the theme uses when cyan has to be read as text. */
+.fpill.on .n, .mkttab.on .n{ color:var(--aqua-hi) !important; }
+
+/* "was 2.25" — the price a selection has moved off. The dark theme lit
+   these in bright green and bright red at 72%, which on paper measures
+   1.89:1. They take the theme's own up and down colours at full
+   strength; the strike-through already carries the meaning, so the
+   colour only has to be readable. */
+.o.up.moved .owas,
+.o.down.moved .owas{ opacity:1 !important; }
+.o.up.moved   .owas{ color:var(--up)   !important; }
+.o.down.moved .owas{ color:var(--down) !important; }

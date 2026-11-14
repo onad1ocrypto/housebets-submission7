@@ -2066,3 +2066,39 @@ function boot() {
 }
 
 document.addEventListener('DOMContentLoaded', boot);
+
+/* ---- gold dust -----------------------------------------------------------
+   A field of specks on the navy bar, each with its own duration and
+   delay so nothing beats in time with anything else. Built here rather
+   than in CSS because a dozen independent clocks is not something a
+   stylesheet can express — and it is skipped entirely when the reader
+   has asked for less motion.
+--------------------------------------------------------------------------- */
+function goldDust(){
+  try{
+    if(window.matchMedia &&
+       window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bar = document.querySelector('.topbar');
+    if(!bar) return;
+    var n = window.innerWidth < 700 ? 18 : 34;
+    var box = document.createElement('div');
+    box.className = 'golddust';
+    box.setAttribute('aria-hidden','true');
+    var frag = document.createDocumentFragment();
+    for(var i=0;i<n;i++){
+      var s = document.createElement('i');
+      s.style.left = (Math.random()*100).toFixed(2) + '%';
+      s.style.top  = (Math.random()*100).toFixed(2) + '%';
+      s.style.setProperty('--dur', (4.5 + Math.random()*6).toFixed(2) + 's');
+      s.style.setProperty('--del', (-Math.random()*11).toFixed(2) + 's');
+      s.style.setProperty('--sz',  (2.2 + Math.random()*3.0).toFixed(2) + 'px');
+      frag.appendChild(s);
+    }
+    box.appendChild(frag);
+    bar.insertBefore(box, bar.firstChild);
+  }catch(e){}
+}
+/* the bar is not in the document yet when this file is evaluated */
+if(document.readyState==='loading')
+  document.addEventListener('DOMContentLoaded', goldDust);
+else goldDust();
