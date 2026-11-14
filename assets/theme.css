@@ -416,3 +416,53 @@ input[data-stake],
 .o.susp .oname,
 .o.susp .oval{ text-decoration:line-through; }
 .o.susp .oval{ color:var(--ink-4) !important; }
+
+/* ============================================================================
+   LIVE AND PRE-MATCH, RESTATED FOR PAPER
+   On a dark screen "live is loud" meant a lighter slab and "pre-match
+   recedes" meant a darker one. On paper that inverts. A dark card on a
+   light sheet is a hole punched in the page, and every colour inside it
+   was mixed for a dark background: the card rows were arriving at 2.25:1.
+
+   So live keeps its red edge rule and everything else goes pale.
+   Pre-match goes paler still and quieter, which is what "recedes" means
+   when the sheet is already light.
+   ========================================================================= */
+.mcard.live, .mrow.live{
+  background:var(--card) !important;
+  border-color:rgba(200,16,46,.30) !important;
+  box-shadow:inset 3px 0 0 var(--live) !important;
+}
+.mcard.live .head{ background:var(--card-2) !important; }
+.mcard.pre, .mrow.pre{
+  background:#F7F6F2 !important;
+  border-color:var(--hair) !important;
+  box-shadow:none !important;
+}
+.mcard.pre .head{ background:#F1EFEA !important; border-bottom-color:var(--hair) !important; }
+.mcard.pre .trow .tname,
+.mrow.pre .who .t .n{ color:var(--ink-2) !important; }
+.mcard.pre .o{ background:var(--card) !important; border-color:var(--hair-2) !important; }
+.mcard.pre .o .oname{ color:var(--ink-3) !important; }
+
+/* The competition chip on a Highlight card was white on a 34% black
+   scrim. On a light card that scrim just soils the club colours, so the
+   chip becomes ink on a pale plate. */
+.hlccomp{
+  color:var(--ink) !important;
+  background:rgba(255,255,255,.86) !important;
+  border:1px solid var(--hair-2) !important;
+  text-shadow:none !important;
+}
+/* The kick-off time sits on a strip of the two clubs' own colours.
+   Measured, those strips run from 0.40 to 0.70 luminance depending on
+   the fixture, so no single text colour survives all of them — white
+   lands at 1.40:1 on the pale ones. Both labels on the card therefore
+   get the same pale plate, and the club colours stay a strip behind it
+   rather than a background under it. */
+.hlctop .hkick{
+  color:var(--ink) !important;
+  background:rgba(255,255,255,.88) !important;
+  border-radius:4px; padding:2px 6px;
+  text-shadow:none !important;
+}
