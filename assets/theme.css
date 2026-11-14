@@ -466,3 +466,54 @@ input[data-stake],
   border-radius:4px; padding:2px 6px;
   text-shadow:none !important;
 }
+
+/* ============================================================================
+   NO LIGHT IS EMITTED ON PAPER
+   The dark theme made things important by making them glow: a cyan
+   box-shadow on the bet column, a cyan text-shadow behind every price,
+   three cyan radial washes drifting under the panel. Printed on white
+   those invers. A cyan bloom behind dark teal text is a highlighter
+   smear, which is precisely the "stain, not a signal" this theme is
+   arguing against. So the emission goes and the motion stays: the
+   shimmer sweep is kept, the glows are replaced by nothing at all, and
+   the column is separated by the same hairline everything else uses.
+   ========================================================================= */
+.panel, .panel.has-bets{
+  animation:none !important;
+  box-shadow:inset 1px 0 0 var(--hair) !important;
+  background-image:none !important;
+}
+.panel::before, .panel::after{ display:none !important; }
+.mb .pr, .bet .bt .pr{ animation:none !important; text-shadow:none !important; }
+
+/* ============================================================================
+   THE DARK SEA UNDERNEATH
+   body::before was a fixed, full-viewport sheet: a wave motif in cyan
+   laid over a #1D1E22 -> #141519 marine gradient. It is the dark theme's
+   whole background, and it survived the swap because nothing here
+   mentioned it.
+
+   The result was that the paper colour was never seen at all. The sheet
+   sat at z-index 0 under every panel, and the only places it surfaced
+   were the 12px gutters the shell leaves between the rail, the main
+   column and the bet column — so the light page was framed by
+   near-black channels.
+
+   The wave is the Housebets mark and is worth keeping, so it stays,
+   redrawn as a faint teal rule on paper instead of a light stroke in
+   the dark. The marine gradient goes entirely.
+   ========================================================================= */
+body::before{
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='80' viewBox='0 0 320 80'%3E%3Cpath d='M0 54c27-24 53-24 80 0s53 24 80 0 53-24 80 0 53 24 80 0' fill='none' stroke='%23006B75' stroke-width='1.6' stroke-opacity='.10'/%3E%3Cpath d='M0 68c27-24 53-24 80 0s53 24 80 0 53-24 80 0 53 24 80 0' fill='none' stroke='%23006B75' stroke-width='1.1' stroke-opacity='.06'/%3E%3C/svg%3E") !important;
+  background-repeat:repeat !important;
+  background-color:transparent !important;
+}
+
+/* The column edges. The bet column kept the dark theme's cyan border at
+   22% alpha, which on paper measures 1.09:1 — a bright line on a light
+   ground is invisible. The main column's hairline was 1.26:1. Both are
+   redrawn in ink so the sheet is ruled the way the hero is: one weight,
+   one colour, an edge you can see without it becoming a frame. */
+.main, .panel, .rail{ border-color:rgba(16,24,28,.30) !important; }
+.panel{ box-shadow:none !important; }
