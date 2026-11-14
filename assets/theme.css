@@ -1,0 +1,369 @@
+/* ============================================================================
+   HOUSEBETS — SUBMISSION 7 · SIANG
+   Every other entry in this contest is dark. This one is daylight.
+
+   That is not a palette preference, it is the whole argument. On a dark
+   screen colour does the work: a thing glows and you look at it. On paper
+   colour stops working — a saturated fill on white is a stain, not a
+   signal — so the hierarchy has to be carried by something else. Here it
+   is carried by weight, by space, and by rules:
+
+     · the price is the heaviest thing in the tile, never the brightest
+     · a suspended market is struck through, not dimmed
+     · a moved price keeps its old value on the line, crossed out
+     · nothing glows anywhere on the page
+
+   The brand survives the inversion. #02F7FD is Housebets' own cyan, taken
+   from their mark and from fill-[#02F7FD] on housebets.com, and it is
+   still the only saturated colour on the screen — but it earns its place
+   as a fill behind near-black ink, not as text. Where cyan has to be read
+   as text it deepens to #006B75, which clears AA on paper.
+   ========================================================================= */
+
+:root{
+  /* ---- surfaces: warm paper, never blue-white ---- */
+  --page:      #F4F3EF;
+  --bar:       #FFFFFF;
+  --card:      #FFFFFF;
+  --card-2:    #F2F1EC;
+  --tile:      #F2F1EC;
+  --tile-2:    #EBE9E2;
+  --tile-hi:   #E2DFD6;
+  --hair:      rgba(16,24,28,.12);
+  --hair-2:    rgba(16,24,28,.20);
+
+  /* ---- ink ---- */
+  --ink:       #10181C;
+  --ink-2:     #46545B;
+  --ink-3:     #57636A;
+  --ink-4:     #5F6C73;
+
+  /* ---- semantic text colours ---- */
+  --c-score:   #0B1418;
+  --c-team:    #1A2429;
+  --c-market:  #57636A;
+  --c-price:   #006B75;   /* deepened Housebets teal — legible on paper */
+
+  /* ---- accent: the brand cyan, split by job ---- */
+  --aqua:        #006B75;   /* cyan as text */
+  --aqua-hi:     #00454C;   /* cyan as text, emphasised */
+  --aqua-deep:   #DCF4F6;   /* pale wash behind a selected surface */
+  --aqua-deep2:  #C4F4F1;   /* Housebets' own pale cyan */
+  --aqua-bright: #02F7FD;   /* the brand cyan — fills and bars only */
+  --aqua-ink:    #041015;   /* what sits on a brand-cyan fill */
+
+  --lime:      #006B75;
+  --lime-deep: #DCF4F6;
+  --lime-soft: rgba(0,107,117,.10);
+
+  --live:      #C8102E;
+  --live-tx:   #B00C27;
+  --live-badge:#D0143C;
+  --up:        #0B6E42;
+  --down:      #B23A20;
+  --gold:      #7A5200;   /* "something changed" — legible on paper */
+
+  /* ---- the sports column: a cool panel, one step off the paper ---- */
+  --sport-bg:      #EFF1F1;
+  --sport-edge:    rgba(16,24,28,.12);
+  --sport-ink:     #46545B;
+  --sport-head:    #5F6C73;
+  --sport-hover:   rgba(0,107,117,.07);
+  --sport-n-bg:    rgba(16,24,28,.08);
+  --sport-n-ink:   #46545B;
+  --sport-on-bg:   #FFFFFF;
+  --sport-on-bar:  #02F7FD;
+  --sport-on-ink:  #0B1418;
+  --sport-on-n-bg: #02F7FD;
+  --sport-on-n-ink:#041015;
+  --sport-thumb:   #D9DCDA;
+
+  /* square corners — paper and rules, not cards and shadows */
+  --r-sm: 2px;
+  --r:    3px;
+  --r-lg: 5px;
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+  --led:  ui-monospace, SFMono-Regular, Menlo, Consolas,
+          "Liberation Mono", monospace;
+}
+
+/* ============================================================================
+   THE PAPER
+   A hairline grid, ruled the way a fixture list is ruled. No scanlines —
+   that was a cathode tube, and there is no tube here.
+   ========================================================================= */
+body{
+  background-color:#F4F3EF;
+  background-image:
+    linear-gradient(90deg, rgba(16,24,28,.028) 1px, transparent 1px),
+    linear-gradient(0deg,  rgba(16,24,28,.028) 1px, transparent 1px),
+    radial-gradient(1100px 420px at 50% -16%, rgba(0,107,117,.045), transparent 64%),
+    linear-gradient(180deg, #FBFBF8 0%, #F4F3EF 58%, #EDEBE5 100%);
+  background-size: 32px 32px, 32px 32px, auto, auto;
+  background-attachment: fixed, fixed, fixed, fixed;
+  min-height:100vh;
+}
+
+/* the app's own painted surfaces sit on the paper, not over it */
+.shell, .app, #app{ background:transparent !important; }
+
+.bar, .topbar{
+  background:rgba(255,255,255,.92) !important;
+  border-bottom:1px solid var(--hair-2) !important;
+  backdrop-filter:blur(8px);
+}
+
+/* on paper a card is separated by a rule and a shadow you barely see,
+   never by being lighter than the page — it already is the page */
+.main, .panel{
+  box-shadow:inset 0 0 0 1px rgba(16,24,28,.05), 0 1px 2px rgba(16,24,28,.04) !important;
+}
+
+/* ============================================================================
+   WEIGHT AND SPACE
+   Monospace still owns every figure, because tabular numerals are the
+   reason to use it and that has nothing to do with the light.
+   ========================================================================= */
+.o .oname,
+.mname,
+.sect h2, .sect .h2,
+.rhead,
+.tk,
+.sb-top,
+.fpill, .chip,
+.mhead{
+  font-family:var(--led) !important;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.o .oname{ font-weight:500; }
+.sect h2, .sect .h2{ letter-spacing:.12em; color:var(--ink); }
+.fpill, .chip{ letter-spacing:.05em; }
+
+.oval, .o .oval,
+.sb-num, .hscore b,
+.clock, .hkick, .mrow .day,
+.row .k, .pv .px{
+  font-family:var(--led) !important;
+  font-variant-numeric:tabular-nums lining-nums;
+}
+
+/* the price is the heaviest thing in the tile, and it does not glow */
+.o .oval{ font-weight:750; }
+
+/* ============================================================================
+   Overrides for what app.css hardcodes dark.
+   Each names the line it replaces.
+   ========================================================================= */
+
+/* L123 / L750 / L786 / L845 / L895 — primary actions: the brand cyan as a
+   fill, near-black ink on top, and a rule to hold the edge against paper */
+.pillbtn.acc,
+.modal .card .acts .p,
+button.primary,
+.cta,
+.btn-acc,
+.btn-register,
+.cta-gold, button.gold{
+  background:var(--aqua-bright) !important;
+  color:var(--aqua-ink) !important;
+  border:1px solid rgba(0,80,88,.30) !important;
+}
+
+/* L253 / L372 / L1110 / L1192 — surfaces app.css paints dark */
+.main, .sresults, .toast, .lab .menu{
+  background:var(--card) !important;
+  border-color:var(--hair-2) !important;
+  box-shadow:0 14px 34px rgba(16,24,28,.14) !important;
+}
+
+/* L257 / L941 — scrollbar thumbs */
+.scroll::-webkit-scrollbar-thumb,
+.slipbody::-webkit-scrollbar-thumb{ background:#CFCEC7 !important; }
+
+/* L419 — the active tab: a pale cyan wash, dark ink, cyan underline */
+.tab.on{
+  color:var(--ink) !important;
+  border-color:var(--aqua) !important;
+  background:var(--aqua-deep) !important;
+  box-shadow:inset 0 -2px 0 var(--aqua-bright) !important;
+}
+
+/* L350 — a selected odds tile: washed, not lit */
+.o.sel, .chip.on{
+  background:var(--aqua-deep) !important;
+  border-color:var(--aqua) !important;
+  color:var(--aqua-hi) !important;
+}
+
+/* L303 / L818 / L900 — dropdowns, popovers, modals */
+.menu, .pop, .modal .card, .sheet{
+  background:var(--card) !important;
+  border:1px solid var(--hair-2) !important;
+  box-shadow:0 18px 40px rgba(16,24,28,.18) !important;
+}
+
+/* L167 — active rail item: white on the cool panel, brand bar at the edge */
+.rail button.on{
+  color:var(--sport-on-ink) !important;
+  background:var(--sport-on-bg) !important;
+  box-shadow:inset 2px 0 0 var(--sport-on-bar), 0 1px 2px rgba(16,24,28,.06) !important;
+}
+
+/* ---- the Live entry is lit -----------------------------------------
+   Red on paper has to go deeper than red on a screen, or it turns pink.
+------------------------------------------------------------------- */
+.rail button.is-live{
+  color:#8E0A20 !important;
+  background:linear-gradient(90deg, rgba(200,16,46,.10), rgba(200,16,46,.02)) !important;
+  box-shadow:inset 0 0 0 1px rgba(200,16,46,.24) !important;
+}
+.rail button.is-live.on{
+  color:#7A0819 !important;
+  background:linear-gradient(90deg, rgba(200,16,46,.16), rgba(0,107,117,.06)) !important;
+  box-shadow:inset 2px 0 0 var(--live), 0 1px 2px rgba(16,24,28,.06) !important;
+}
+.rail button.is-live .n{
+  background:rgba(200,16,46,.14) !important;
+  color:#8E0A20 !important;
+}
+.rail button .ldot,
+.tab.is-live::after{
+  width:7px; height:7px; border-radius:99px; background:var(--live);
+  box-shadow:0 0 0 3px rgba(200,16,46,.14);
+  animation:ldotPulse 1.6s ease-in-out infinite;
+}
+@keyframes ldotPulse{
+  0%,100%{ opacity:1;   box-shadow:0 0 0 3px rgba(200,16,46,.16); }
+  50%    { opacity:.45; box-shadow:0 0 0 5px rgba(200,16,46,.04); }
+}
+@media (prefers-reduced-motion:reduce){
+  .rail button .ldot, .tab.is-live::after{ animation:none; }
+}
+.tab.is-live{
+  border-color:rgba(200,16,46,.45) !important;
+  box-shadow:inset 0 -2px 0 var(--live) !important;
+}
+.rail .rhead{ color:var(--sport-head) !important; }
+.rail button .n{ background:var(--sport-n-bg) !important; color:var(--sport-n-ink) !important; }
+.rail button.on .n{ background:var(--sport-on-n-bg) !important; color:var(--sport-on-n-ink) !important; }
+
+/* L691 / L867 — small accent chips */
+.badge, .avatar, .markchip{
+  background:var(--aqua-bright) !important;
+  color:var(--aqua-ink) !important;
+}
+
+/* ============================================================================
+   THE HERO — a poster on paper, not a screen in the dark
+   The two clubs still tint it, but only enough to stain the paper.
+   ========================================================================= */
+.hero{
+  background:var(--card) !important;
+  border:1px solid var(--hair-2) !important;
+}
+.hero::before{
+  background:linear-gradient(180deg, rgba(255,255,255,.58) 0%, rgba(255,255,255,.80) 46%, rgba(255,255,255,.96) 100%) !important;
+}
+.hero .heroart{ opacity:.30; }
+.heroart .ha-crest img{ filter:none !important; }
+.heroart .ha-vs{ color:rgba(16,24,28,.26) !important; text-shadow:none !important; }
+.hkick, .hmeta{ color:var(--ink-2) !important; }
+.hteam b{ color:var(--ink) !important; }
+.hscore b{ color:#0B1418 !important; }
+.hscore span, .hvs{ color:var(--ink-4) !important; }
+.hgo{
+  background:rgba(16,24,28,.05) !important;
+  border-color:var(--hair-2) !important;
+  color:var(--ink) !important;
+}
+.hgo:hover{ background:var(--aqua-deep) !important; border-color:var(--aqua) !important; color:var(--aqua-hi) !important; }
+.hlive i{ background:#FFFFFF !important; }
+
+/* ============================================================================
+   THE FIGURES
+   No glow. On paper a score is simply the blackest thing on the card.
+   ========================================================================= */
+.sb-num, .hscore b{
+  color:#0B1418 !important;
+  text-shadow:none !important;
+}
+.sb-dash, .hscore span{ color:var(--ink-4) !important; }
+.sb-top .k, .clock{ color:var(--live-tx) !important; }
+
+.scoreboard{
+  background:var(--card) !important;
+  border:1px solid var(--hair-2) !important;
+}
+.scoreboard.live{ box-shadow:inset 3px 0 0 var(--live) !important; }
+.sb-cards .cd.y i{ background:#F5C518 !important; }
+
+/* ============================================================================
+   THE BET SLIP STAYS ORDINARY
+   Same rule as before, restated for paper: a stake is the one number a
+   player must never have to decode, so it gets a plain white field, dark
+   ink, a firm rule around it, and nothing else.
+   ========================================================================= */
+input[data-stake],
+.slipbar input,
+.sheet input,
+.stake{
+  background:#FFFFFF !important;
+  color:#0B1418 !important;
+  border:1px solid var(--aqua) !important;
+  font-variant-numeric:tabular-nums;
+  text-shadow:none !important;
+}
+.slipbar input::placeholder,
+.sheet input::placeholder{ color:var(--ink-4) !important; }
+
+/* ============================================================================
+   Detail work
+   ========================================================================= */
+
+/* section headings get a rule under them, like a printed divider */
+.sect h2, .sect .h2{
+  border-bottom:1px solid var(--hair-2);
+  padding-bottom:7px;
+}
+
+.crest{
+  box-shadow:0 0 0 1px rgba(16,24,28,.14);
+  border-radius:3px;
+}
+
+.livebadge{
+  background:var(--live-badge) !important;
+  color:#FFFFFF !important;
+  box-shadow:none !important;
+}
+
+.card, .mcard{
+  border-top-color:var(--hair) !important;
+  background:var(--card) !important;
+}
+
+/* the price history lines belong to entry 6; this one keeps the old
+   value on the line instead, struck through */
+.spark{ display:none; }
+
+/* ============================================================================
+   TWO RULES RESTATED FOR PAPER
+   Entry 6 gave the tile 44px so a sparkline could live along its bottom
+   edge. With the line gone the tile gives that height back.
+
+   And a suspended market is struck through rather than dimmed: on paper,
+   fading something out reads as a printing fault, not as a state.
+   ========================================================================= */
+.o{ min-height:36px !important; }
+.o.susp{
+  opacity:1 !important;
+  border-style:dashed !important;
+  background:transparent !important;
+}
+.o.susp .oname{ color:var(--ink-4) !important; }
+.o.susp .oname,
+.o.susp .oval{ text-decoration:line-through; }
+.o.susp .oval{ color:var(--ink-4) !important; }
